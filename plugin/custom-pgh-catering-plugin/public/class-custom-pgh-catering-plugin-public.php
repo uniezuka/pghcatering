@@ -8,12 +8,15 @@ class Custom_Pgh_Catering_Plugin_Public {
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
-        add_action( 'wp_ajax_nopriv_adjust_cart', array( $this, 'adjust_cart' ) );
-        add_action( 'wp_ajax_adjust_cart',        array( $this, 'adjust_cart' ) );
-
-        add_filter('woocommerce_add_cart_item_data','wdm_add_item_data',10,3);
 	}
+
+    public function add_menu_day($cart_item_data, $product_id, $variation_id) {
+        if(isset($_POST['menu_day'])) {
+            $cart_item_data['menu_day'] = sanitize_text_field($_POST['menu_day']);
+        }
+
+        return $cart_item_data;
+    }
 
     function adjust_cart() {
         if( empty($_POST) || !isset($_POST) ) {
@@ -60,16 +63,6 @@ class Custom_Pgh_Catering_Plugin_Public {
                 wp_send_json( $data );
             }
         }
-    }
-
-    function wdm_add_item_data($cart_item_data, $product_id, $variation_id)
-    {
-        if(isset($_POST['menu_day']))
-        {
-            $cart_item_data['menu_day'] = sanitize_text_field($_POST['menu_day']);
-        }
-
-        return $cart_item_data;
     }
 
 	public function enqueue_styles() {

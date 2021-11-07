@@ -14,15 +14,15 @@
     }
 ?>
 
-<a href="#" id="image-popup-<?= $pid ?>" class="title-popup-link">
+<a href="#" class="title-popup-link" data-modal_id="<?= $pid . '-' . $menu_day; ?>">
     <div class="product-card-image-wrapper">
         <div class="product-card-image">
             <img src="<?= $image_src[0] ?>" alt="<?= $title ?>" />
             <?= $overlay ?>
         </div>
 
-        <div id="overlay-<?= $pid ?>" class="product-card-image-overlay <?= $in_cart_class ?>">
-            <div id="qty-in-cart-<?= $pid ?>" class="qty-in-cart"><?= $total_qty_in_cart ?></div>
+        <div id="overlay-<?= $pid . '-' . $menu_day; ?>" class="product-card-image-overlay <?= $in_cart_class ?>">
+            <div class="qty-in-cart"><?= $total_qty_in_cart ?></div>
         </div>
     </div>
 </a>

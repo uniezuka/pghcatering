@@ -12,39 +12,35 @@
                 $('.custom-add-to-cart').css('color', '#ccc');
 
                 var product_type = $(this).data('type');       // product type
-                var take_action = $(this).data('function');   // add or remove
-                var product_id = $(this).data('product');    // product_id
+                var take_action = $(this).data('action');   // add or remove
+                var product_id = $(this).data('product_id');    // product_id
                 var variation_id = $(this).data('variationid');// variation_id
                 var menu_day = $(this).data('menu_day');// menu_day
                 var variation = $(this).data('variation');  // variation array
 
                 var currentQty = 0;
                 var quantity = (take_action == 'add') ? 1 : -1;
+                var current_qty_node = $(this).parent().find('.atc-current-quantity');
                 
-                if ($('#atc-qty-' + variation_id).text() !== '') {
-                    currentQty = parseInt($('#atc-qty-' + variation_id).text());
+                if (current_qty_node.text() !== '') {
+                    currentQty = parseInt(current_qty_node.text());
                 }
+
+                var total_qty_in_cart_node = $('#overlay-' + product_id + '-' + menu_day + ' .qty-in-cart');
+                var total_qty_in_cart = total_qty_in_cart_node.text();
 
                 var id = (product_type == 'simple') ? product_id : variation_id;
                 
                 $.ajax({
                     type: 'POST',
-                    //url: config_custom.wc_add_to_cart_url,
                     url: config_custom.ajax_url,
                     dataType: 'json',
-                    // headers: {
-                    //     'X-WC-Store-API-Nonce': config_custom.wc_store_api
-                    // },
-                    // data: {
-                    //     id : id,
-                    //     quantity: quantity,
-                    //     menu_day: menu_day
-                    // },
                     data: {
-                        'action': 'woocommerce_add_to_cart',
+                        'action': 'adjust_cart',
                         'product_id': id,
                         'menu_day': menu_day,
-                        'quantity': quantity
+                        'quantity': quantity,
+                        'take_action': take_action
                     },
                     success: function (response) {
                         $('.custom-add-to-cart').removeClass('disabled');
@@ -52,27 +48,25 @@
 
                         if (take_action === 'add') {
                             currentQty++;
+                            total_qty_in_cart++;
                         }
                         else {
                             currentQty--;
+                            total_qty_in_cart--;
 
-                            if (currentQty <= 0) currentQty = 0;       
+                            if (currentQty <= 0) currentQty = 0;
+                            if (total_qty_in_cart <= 0) total_qty_in_cart = 0;      
                         }
 
-                        if (currentQty !== 0) {
-                            $('#qty-in-cart-' + product_id).text(currentQty);
+                        if (total_qty_in_cart < 1) {
+                            total_qty_in_cart_node.parent().addClass(' not-in-cart');
+                        } 
+                        else {
+                            total_qty_in_cart_node.parent().removeClass('not-in-cart');
                         }
 
-                        if (currentQty < 1) {
-                            $('#overlay-' + product_id).addClass(' not-in-cart');
-                            $('#atc-label-text-' + product_id).text('Add To Cart ');
-                        } else {
-                            $('#overlay-' + product_id).removeClass('not-in-cart');
-                            $('#atc-label-text-' + product_id).text('Added To Cart ');
-                        }
-
-                        $('#atc-qty-' + variation_id).text(currentQty);
-
+                        total_qty_in_cart_node.text(total_qty_in_cart);
+                        current_qty_node.text(currentQty);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(textStatus);
@@ -82,54 +76,46 @@
         });
 
         $.each($('.nf-popup'), function (index, value) {
-            var product_id = $(this).attr('id');
-            product_id = product_id.split('-');
-            product_id = product_id[2];
-
-            if ($('#modal-' + product_id).length > 0) {
-                $('#nf-popup-' + product_id).removeClass('hidden-by-default');
-            }
+            var modal_id = $(this).data('modal_id');
 
             $(this).click(function (event) {
                 event.preventDefault();
-                $('#modal-' + product_id).toggleClass('show-modal');
+                $('#nf-modal-' + modal_id).toggleClass('show-modal');
                 $('body').addClass('noScroll');
             });
 
-            $('#close-button-' + product_id).click(function (event) {
+            $('.close-button').click(function (event) {
                 event.preventDefault();
                 $('body').removeClass('noScroll');
-                $('#modal-' + product_id).removeClass('show-modal');
+                $(this).parent().parent().removeClass('show-modal');
             });
 
-            $('#modal-' + product_id).click(function (event) {
+            $('#nf-modal-' + modal_id).click(function (event) {
                 event.preventDefault();
-                $('#modal-' + product_id).removeClass('show-modal');
+                $('#modal-' + modal_id).removeClass('show-modal');
                 $('body').removeClass('noScroll');
             });
 
         });
 
         $.each($('.title-popup-link'), function (index, value) {
-            var product_id = $(this).attr('id');
-            product_id = product_id.split('-');
-            product_id = product_id[2];
-    
+            var modal_id = $(this).data('modal_id');
+
             $(this).click(function (event) {
                 event.preventDefault();
-                $('#title-modal-' + product_id).toggleClass('show-modal');
+                $('#title-modal-' + modal_id).toggleClass('show-modal');
                 $('body').addClass('noScroll');
             });
     
-            $('#title-close-button-' + product_id).click(function (event) {
+            $('#title-modal-' + modal_id + ' .close-button').click(function (event) {
                 event.preventDefault();
                 $('body').removeClass('noScroll');
-                $('#title-modal-' + product_id).removeClass('show-modal');
+                $('#title-modal-' + modal_id).removeClass('show-modal');
             });
     
-            $('#title-modal-' + product_id).click(function (event) {
+            $('#title-modal-' + modal_id).click(function (event) {
                 event.preventDefault();
-                $('#title-modal-' + product_id).removeClass('show-modal');
+                $('#title-modal-' + modal_id).removeClass('show-modal');
                 $('body').removeClass('noScroll');
             });
     

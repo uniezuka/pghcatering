@@ -60,6 +60,11 @@ class Custom_Pgh_Catering_Plugin {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
         $this->loader->add_action( 'wp_print_scripts', $plugin_public, 'print_scripts_instead_of_enqueue' );
+
+        $this->loader->add_action( 'wp_ajax_nopriv_adjust_cart', $plugin_public, 'adjust_cart' );
+        $this->loader->add_action( 'wp_ajax_adjust_cart', $plugin_public, 'adjust_cart' );
+
+        $this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'add_menu_day', 10, 3 );
 	}
 
     function custom_image_sizes() {

@@ -39,8 +39,12 @@
                 if ( $cart_product_type === 'variation' ) {
                     $cart_product_id = $values['data']->get_id();
 
-                    if( $variation_id === $cart_product_id ) {
-                        $current_quantity = $quantity;
+                    if(array_key_exists('menu_day', $values)) {
+                        if ($values['menu_day'] === $menu_day) {
+                            if( $variation_id === $cart_product_id ) {
+                                $current_quantity = $quantity;
+                            }
+                        }
                     }
                 }
             }
@@ -51,11 +55,13 @@
             $addtocart_options['variation_title'] = $variation_title;
             $addtocart_options['variation_array'] = $variation_array;
             $addtocart_options['is_gift_card'] = $is_gift_card;
+            $addtocart_options['menu_day'] = $menu_day;
 
             display_add_to_cart($product, $addtocart_options, $menu_day);
         }
     } 
     else if ( $product->is_type('simple') ) {
+        $current_quantity = 0;
         $product_type    = 'simple';
         $variation_id    = $pid;
         $variation_slug  = __( 'more-info', CUSTOM_PGH_CATERING_DOMAIN_NAME ); // this is unused for simple products on menu page
@@ -74,8 +80,13 @@
 
             if ( $cart_product_type === 'simple' ) {
                 $cart_product_id = $values['data']->get_id();
-                if( $pid === $cart_product_id ) {
-                    $current_quantity = $quantity;
+                
+                if(array_key_exists('menu_day', $values)) {
+                    if ($values['menu_day'] === $menu_day) {
+                        if( $pid === $cart_product_id ) {
+                            $current_quantity = $quantity;
+                        }
+                    }
                 }
             }
         }

@@ -52,7 +52,7 @@
         );
     }
 
-    function calculate_total_qty_in_cart_for_this( $pid, $current_cart ) {
+    function calculate_total_qty_in_cart_for_this( $pid, $current_cart, $menu_day = '') {
         $string = '';
         $count  = 0;
 
@@ -64,15 +64,24 @@
                 if ( $cart_product_type === 'simple' ) {
                     $cart_product_id   = $values['data']->get_id();
 
-                    if( $pid === $cart_product_id ) {
-                        $count = intval($count) + intval($quantity);
+                    if(array_key_exists('menu_day', $values)) {
+                        if ($values['menu_day'] === $menu_day) {
+                            if( $pid === $cart_product_id ) {
+                                $count = intval($count) + intval($quantity);
+                            }
+                        }
                     }
                 } 
 
                 else if ( $cart_product_type === 'variation' ) {
                     $cart_product_id  = $values['data']->get_parent_id();
-                    if( $pid === $cart_product_id ) {
-                        $count = intval($count) + intval($quantity);
+
+                    if(array_key_exists('menu_day', $values)) {
+                        if ($values['menu_day'] === $menu_day) {
+                            if( $pid === $cart_product_id ) {
+                                $count = intval($count) + intval($quantity);
+                            }
+                        }
                     }
                 }
             }
@@ -129,7 +138,7 @@
     include 'template-weekly-menu-parts/html-generator-functions.php';
 ?>
 
-<?php echo '<pre>cart: ' . var_export(WC()->cart->get_cart(), true) . '</pre>'; ?>
+<!-- <?php echo '<pre>cart: ' . var_export(WC()->cart->get_cart(), true) . '</pre>'; ?> -->
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="entry-content">

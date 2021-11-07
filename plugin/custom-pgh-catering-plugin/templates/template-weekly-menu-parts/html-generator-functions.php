@@ -19,39 +19,41 @@
         if ( $current_quantity === NULL ) {
             $current_quantity = '0';
         }
+
+        $nf_modal_id = $variation_id . '-' . $menu_day;
 ?>
     <div class="atc-lockup">
-        <div id="atc-label-<?= $variation_id ?>" class="atc-label <?= $product_type ?>-label">
+        <div class="atc-label <?= $product_type ?>-label">
 
         <?php if ($is_gift_card) : ?>
-            <span id="atc-label-text-<?= $variation_id ?>"><?= $variation_title ?></span><strong><span id="OFFatc-qty-before-<?= $variation_id ?>"></span>         <span id="OFFatc-qty-after-<?= $variation_id ?>"></span></strong>
+            <span><?= $variation_title ?></span><strong><span>"></span>         <span></span></strong>
         <?php else : ?>
-            <a href="#" id="nf-popup-<?= $variation_id ?>" class="nf-popup"><span id="atc-label-text-<?= $variation_id ?>"><?= $label_before . $variation_title ?></span> <i class="far fa-info-circleOFF" style="font-size:12px">Nutrition</i> <strong><span id="OFFatc-qty-before-<?= $variation_id ?>"></span>         <span id="OFFatc-qty-after-<?= $variation_id ?>"></span></strong></a>
+            <a href="#" data-modal_id="<?= $nf_modal_id ?>" class="nf-popup"><span><?= $label_before . $variation_title ?></span> <i class="far fa-info-circleOFF" style="font-size:12px">Nutrition</i> <strong><span></span>         <span></span></strong></a>
         <?php endif ?>
 
         </div>
 
-        <div id="atc-buttons-<?= $variation_id ?>" class="atc-buttons <?= $product_type ?>-buttons">
+        <div class="atc-buttons <?= $product_type ?>-buttons">
             <div class="atc-button-bar">
-                <a href="javascript:void(0);" id="remove-from-cart-<?= $variation_id ?>" class="custom-add-to-cart" data-type="<?= $product_type ?>" data-function="remove" data-variationid="<?= $variation_id ?>" data-variation="<?= json_encode($variation_array) ?>" data-product="<?= $product_id ?>" data-menu_day="<?= $menu_day ?>">
+                <a href="javascript:void(0);" class="custom-add-to-cart" data-type="<?= $product_type ?>" data-action="remove" data-variationid="<?= $variation_id ?>" data-variation="<?= json_encode($variation_array) ?>" data-product_id="<?= $product_id ?>" data-menu_day="<?= $menu_day ?>">
                     <i class="far fa-minus"></i>
                 </a>
 
-                <span id=""><span id="atc-qty-<?= $variation_id ?>" class="atc-current-quantity"><?= $current_quantity ?></span></span>
+                <span><span class="atc-current-quantity"><?= $current_quantity ?></span></span>
 
-                <a href="javascript:void(0);" id="add-to-cart-<?= $variation_id ?>" class="custom-add-to-cart" data-type="<?= $product_type ?>" data-function="add" data-variationid="<?= $variation_id ?>" data-variation="<?= json_encode($variation_array) ?>" data-product="<?= $product_id ?>" data-menu_day="<?= $menu_day ?>">
+                <a href="javascript:void(0);" class="custom-add-to-cart" data-type="<?= $product_type ?>" data-action="add" data-variationid="<?= $variation_id ?>" data-variation="<?= json_encode($variation_array) ?>" data-product_id="<?= $product_id ?>" data-menu_day="<?= $menu_day ?>">
                     <i class="far fa-plus"></i>
                 </a>
             </div>
         </div>
     </div>
 <?php 
-        generate_nf_modal($product_type, $product_id, $variation_id, $variation_title);
+        generate_nf_modal($product_type, $product_id, $variation_id, $variation_title, $menu_day);
     } 
 ?>
 
 <?php
-    function generate_nf_modal($product_type, $parent_id, $variation_id, $variation_title) {
+    function generate_nf_modal($product_type, $parent_id, $variation_id, $variation_title, $menu_day = '') {
         $product_id = $variation_id;
 
         if ( $product_type === 'simple' ) {
@@ -93,9 +95,11 @@
         
         $carb = get_post_meta( $product_id, $prefix . 'carb', true );
         if ( empty($carb) ) { $carb = 1; }
+
+        $nf_modal_id = $variation_id . '-' . $menu_day;
 ?>
-    <div id="modal-<?= $product_id ?>" class="modal">
-        <div id="modal-content-<?= $product_id ?>" class="modal-content">
+    <div id="nf-modal-<?= $nf_modal_id ?>" class="modal">
+        <div class="modal-content">
             <div class="modal-menu-item-details">
                 <h4 class="modal-menu-title"><?= $title . ' ' . $subtitle ?></h4>
                 <?php if ( !empty($sidetitle) ) : ?>
@@ -103,7 +107,7 @@
                 <?php endif ?>
                 <div class="modal-menu-desc"><?= $description ?></div>
             </div>
-            <span id="close-button-<?= $product_id ?>" class="close-button">&times;</span>
+            <span class="close-button">&times;</span>
             <div class="modal-nutrition-facts">
                 <h2 class="nf-header">Nutrition Facts</h2>
                 <div class="flex-row">1 serving per container</div>

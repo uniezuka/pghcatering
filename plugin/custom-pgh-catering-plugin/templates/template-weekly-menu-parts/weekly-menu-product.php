@@ -14,14 +14,14 @@
         $portionsize = ' <h6 class="right"><small class="portionsize">(' .$portionsize . ')</small></h6>';
     } 
 
-    $total_qty_in_cart = calculate_total_qty_in_cart_for_this($pid, $current_cart);
+    $total_qty_in_cart = calculate_total_qty_in_cart_for_this($pid, $current_cart, $menu_day);
     $in_cart_class = ( $total_qty_in_cart > 0 ) ? 'found-in-cart' : 'not-in-cart';
 
     $options_label = ( $product->get_type() === 'variable' ) ?
         __('Side Options', CUSTOM_PGH_CATERING_DOMAIN_NAME ) : __('Options', CUSTOM_PGH_CATERING_DOMAIN_NAME );
 ?>
 
-<div class="product-card is-<?= $counter_class ?> flex-columns-<?= $columns ?>" id="<?= $slug ?>">
+<div class="product-card is-<?= $counter_class ?> flex-columns-<?= $columns ?>">
     <div class="product-card-wrapper">
         <div class="product-card-inner">
 
@@ -38,7 +38,7 @@
                         ?>
                     </div>
 
-                    <a href="#" id="title-popup-<?= $pid ?>" class="title-popup-link">
+                    <a href="#" class="title-popup-link" data-modal_id="<?= $pid . '-' . $menu_day; ?>">
                         <h4><?= $title ?> <small class="small-info"><i class="far fa-info-circleOFF" style="font-size:12px">INFO</i></small></h4>
                         <div class="subtitle">
                             <h6 class="left"><?= $subtitle ?> </h6><?= $portionsize ?>
