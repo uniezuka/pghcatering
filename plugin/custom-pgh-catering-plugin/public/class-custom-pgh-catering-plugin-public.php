@@ -18,7 +18,11 @@ class Custom_Pgh_Catering_Plugin_Public {
         return $cart_item_data;
     }
 
-    function adjust_cart() {
+    public function wps_store_select_first_option($label) {
+        return 'Select a location';
+    }
+
+    public function adjust_cart() {
         if( empty($_POST) || !isset($_POST) ) {
             error_log('Error! _POST empty or not set.');
         } 

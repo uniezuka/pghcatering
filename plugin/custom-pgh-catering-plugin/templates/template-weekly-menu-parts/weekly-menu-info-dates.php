@@ -64,13 +64,7 @@
                     <div id="delivery">
                         <h4><?= __( 'DELIVERY:', CUSTOM_PGH_CATERING_DOMAIN_NAME ) ?></h4>
                         <div class="menu-info-datebox">
-                            <h5><?= __( 'SUNDAY or MONDAY', CUSTOM_PGH_CATERING_DOMAIN_NAME ) ?></h5> <?= $delivery_sunday ?> / <?= $delivery_monday ?>
-                        </div>
-                    </div>
-                    <div id="pickup">
-                        <h4><?= __('PICKUP:', CUSTOM_PGH_CATERING_DOMAIN_NAME ) ?></h4>
-                        <div class="menu-info-datebox">
-                            <h5><?= __('MONDAY', CUSTOM_PGH_CATERING_DOMAIN_NAME ) ?></h5> <?= $pickup_monday ?>
+                            <?= $delivery_date_message ?>
                         </div>
                     </div>
                     <div id="available">
@@ -84,4 +78,9 @@
             </div>
         </div>
     </div>
+</div>
+<div class="text-center full-width">
+    <?php if ( is_active_sidebar( 'below-menu-banner' ) ) : ?>
+        <?php dynamic_sidebar( 'below-menu-banner' ); ?>
+    <?php endif; ?>
 </div>

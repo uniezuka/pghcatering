@@ -53,6 +53,7 @@
                         else {
                             currentQty--;
                             total_qty_in_cart--;
+                            cart_qty--;
 
                             if (currentQty <= 0) currentQty = 0;
                             if (total_qty_in_cart <= 0) total_qty_in_cart = 0;      
@@ -67,6 +68,7 @@
 
                         total_qty_in_cart_node.text(total_qty_in_cart);
                         current_qty_node.text(currentQty);
+                        $(document.body).trigger('wc_fragment_refresh');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(textStatus);

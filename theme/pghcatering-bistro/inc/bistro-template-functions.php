@@ -87,3 +87,18 @@ function bistro_wrapper_close() {
 function bistro_rating_button_wrapper() {
 	echo '<section class="bistro-rating-cart-button">';
 }
+
+function register_custom_widget() {
+    register_sidebar(
+        array(
+            'id' => 'below-menu-banner',
+            'name'        => __( 'Below Menu Banner', 'storefront' ),
+            'description' => __( 'Widgets added to this region will appear beneath the menu\'s banner', 'storefront' ),
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<span class="gamma widget-title">',
+            'after_title'   => '</span>',
+        )
+    );
+}
+add_action( 'widgets_init', 'register_custom_widget' );

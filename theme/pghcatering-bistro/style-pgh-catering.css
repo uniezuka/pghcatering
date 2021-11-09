@@ -2089,35 +2089,14 @@
     outline: none;
   }
   
-  /*----------------------------------------------djh Sep 11, 2018
+  /*----------------------------------------------
     Menu Page General
   ----------------------------------------------*/
   #current-menu {
     padding-top: 0;
     background-color: #f8f8f8;
   }
-  
-  .home #current-menu {
-    background-color: transparent;
-    text-align: left;
-  }
-  
-  .home #current-menu .menu-section-wrapper.flex-row {
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-  }
-  
-  .home #current-menu .menu-section-wrapper.flex-row .product-card {
-    max-width: 300px;
-    margin: 0 auto 2rem;
-  }
-  
-  .home #current-menu .menu-section-wrapper.flex-row .product-card .adjust-separator,
-  .home #current-menu .menu-section-wrapper.flex-row .product-card .product-card-addtocart {
-    display: none;
-  }
-  
+   
   #current-menu #menu-nav-wrapper {
     background-color: #fff;
   }
@@ -4187,7 +4166,7 @@
   @media only screen and (min-width: 768px) {
     #menu-info-dates #pickup,
     #menu-info-dates #delivery {
-      width: 50%;
+      width: 100%;
       float: left;
     }
   }

@@ -128,10 +128,15 @@
 
     $pagetitle = get_the_title();
 
-    $delivery_sunday = get_default_value_for_non_existing( get_field( 'weekly_menu_delivery_sunday', $weekly_menu_id ), '' );
-    $delivery_monday = get_default_value_for_non_existing( get_field( 'weekly_menu_delivery_monday', $weekly_menu_id ), '' );
-    $pickup_monday = get_default_value_for_non_existing( get_field( 'weekly_menu_pickup_monday', $weekly_menu_id ), '' );
     $menu_available_until = get_default_value_for_non_existing( get_field( 'weekly_menu_available_until', $weekly_menu_id ), '' );
+    $delivery_date = get_default_value_for_non_existing( get_field( 'delivery_date', $weekly_menu_id ), '' );
+    $delivery_date_message = '';
+
+    if ($delivery_date !== '') {
+        $delivery_time = strtotime($delivery_date);
+
+        $delivery_date_message = 'Deliver ' . date('l', $delivery_time) .  ' "' . date('m/d/Y', $delivery_time) . '"';
+    }
 
     $current_cart = ( WC() && WC()->cart) ? WC()->cart->get_cart() : null;
     

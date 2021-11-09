@@ -65,6 +65,8 @@ class Custom_Pgh_Catering_Plugin {
         $this->loader->add_action( 'wp_ajax_adjust_cart', $plugin_public, 'adjust_cart' );
 
         $this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'add_menu_day', 10, 3 );
+
+        $this->loader->add_filter( 'wps_store_select_first_option', $plugin_public, 'wps_store_select_first_option' );   
 	}
 
     function custom_image_sizes() {
