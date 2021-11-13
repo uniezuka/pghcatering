@@ -77,6 +77,7 @@ if ( ! class_exists( 'Bistro' ) ) {
 			 */
 			wp_enqueue_style( 'storefront-style', get_template_directory_uri() . '/style.css', $storefront_version );
             wp_enqueue_style( 'storefront-pgh-catering-style', get_stylesheet_directory_uri() . '/style-pgh-catering.css' );
+            wp_enqueue_style( 'storefront-pgh-catering-extend-style', get_stylesheet_directory_uri() . '/style-extend.css' );
 			wp_style_add_data( 'storefront-child-style', 'rtl', 'replace' );
 
 			if ( is_page_template( 'template-homepage.php' ) ) {

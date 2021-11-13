@@ -34,10 +34,6 @@
 			do_action( 'storefront_footer' );
 
 			?>
-			<div class="policy">
-				<a href="/privacy-policy/">Privacy Policy</a>
-			</div>
-
 		</div><!-- .col-full -->
 	</footer><!-- #colophon -->
 

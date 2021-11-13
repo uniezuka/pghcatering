@@ -135,15 +135,13 @@
     if ($delivery_date !== '') {
         $delivery_time = strtotime($delivery_date);
 
-        $delivery_date_message = 'Deliver ' . date('l', $delivery_time) .  ' "' . date('m/d/Y', $delivery_time) . '"';
+        $delivery_date_message = 'Deliver ' . date('l', $delivery_time) .  ' ' . date('m/d/Y', $delivery_time);
     }
 
     $current_cart = ( WC() && WC()->cart) ? WC()->cart->get_cart() : null;
     
     include 'template-weekly-menu-parts/html-generator-functions.php';
 ?>
-
-<!-- <?php echo '<pre>cart: ' . var_export(WC()->cart->get_cart(), true) . '</pre>'; ?> -->
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="entry-content">

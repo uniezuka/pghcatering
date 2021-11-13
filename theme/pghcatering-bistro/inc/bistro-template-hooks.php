@@ -39,4 +39,6 @@ function bistro_hooks() {
 		remove_action( 'storefront_header', 'storefront_header_container_close', 41 );
 		add_action( 'storefront_header', 'storefront_header_container_close', 100 );
 	}
+
+    add_filter( 'storefront_credit_link', 'remove_storefront_credit_link' );    
 }

@@ -1,0 +1,15 @@
+.woocommerce-additional-fields h3 {
+    display: none;
+}
+
+.woocommerce-shipping-destination {
+    display: none;
+}
+
+.cart_totals .shipping-pickup-store {
+    display: none;
+}
+
+abbr.required {
+    text-decoration: none;
+}

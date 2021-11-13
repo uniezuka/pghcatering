@@ -27,3 +27,10 @@ if ( ! function_exists( 'storefront_cart_link' ) ) {
 		}
 	}
 }
+
+if ( ! function_exists( 'remove_storefront_credit_link' ) ) {
+	function remove_storefront_credit_link($return) {
+		return false;
+	}
+}
+

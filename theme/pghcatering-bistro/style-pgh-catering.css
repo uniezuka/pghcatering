@@ -3765,6 +3765,7 @@
     .woocommerce .all_coupon_container,
     .single-product #main,
     .woocommerce-account.logged-in #main,
+    #customer_login,
     #custom-login-wrapper,
     .error404 #main,
     .archive #main,
@@ -3796,6 +3797,12 @@
     .entry-content #gift-card-wrapper .woocommerce {
       max-width: 400px;
       margin: auto;
+    }
+
+    .col2-set#customer_login {
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
     }
   }
   
@@ -4986,26 +4993,22 @@
     z-index: 3;
   }
   
-  /*----------------------------------------------djh Aug 24, 2018
-   *
-   *
-   *
-   *
-   *
-    BEGIN REBASED STYLES
-   *
-   *
-   *
-   *
-   *
-  ----------------------------------------------*/
-  /*----------------------------------------------djh Aug 27, 2018
+  /*----------------------------------------------
     Base Styles
   ----------------------------------------------*/
   .entry-content p,
   .entry-content p + ul {
     font-size: 14px;
   }
+
+  .below-menu-banner .widget {
+    font-family: "Arial";
+  }
+
+  .below-menu-banner p {
+    font-size: 15px;
+  }
+
   
   /*----------------------------------------------djh Aug 24, 2018
     MENU / SHOP PAGE

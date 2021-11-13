@@ -79,7 +79,7 @@
         </div>
     </div>
 </div>
-<div class="text-center full-width">
+<div class="text-center full-width below-menu-banner">
     <?php if ( is_active_sidebar( 'below-menu-banner' ) ) : ?>
         <?php dynamic_sidebar( 'below-menu-banner' ); ?>
     <?php endif; ?>
