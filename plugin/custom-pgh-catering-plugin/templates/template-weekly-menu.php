@@ -64,8 +64,8 @@
                 if ( $cart_product_type === 'simple' ) {
                     $cart_product_id   = $values['data']->get_id();
 
-                    if(array_key_exists('menu_day', $values)) {
-                        if ($values['menu_day'] === $menu_day) {
+                    if(array_key_exists('pgh_menu_day', $values)) {
+                        if ($values['pgh_menu_day'] === $menu_day) {
                             if( $pid === $cart_product_id ) {
                                 $count = intval($count) + intval($quantity);
                             }
@@ -76,8 +76,8 @@
                 else if ( $cart_product_type === 'variation' ) {
                     $cart_product_id  = $values['data']->get_parent_id();
 
-                    if(array_key_exists('menu_day', $values)) {
-                        if ($values['menu_day'] === $menu_day) {
+                    if(array_key_exists('pgh_menu_day', $values)) {
+                        if ($values['pgh_menu_day'] === $menu_day) {
                             if( $pid === $cart_product_id ) {
                                 $count = intval($count) + intval($quantity);
                             }

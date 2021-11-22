@@ -43,6 +43,10 @@ if ( !defined( 'CUSTOM_PGH_CATERING_DOMAIN_NAME') ) {
 	define( 'CUSTOM_PGH_CATERING_DOMAIN_NAME', 'custom-pgh-catering-plugin' );
 }
 
+if ( !defined( 'CUSTOM_PGH_CATERING_DOMAIN_NAME') ) {
+	define( 'CUSTOM_PGH_CATERING_DOMAIN_NAME', 'custom-pgh-catering-plugin' );
+}
+
 function activate_custom_pgh_catering_plugin() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-custom-pgh-catering-plugin-activator.php';
 	Custom_Pgh_Catering_Plugin_Activator::activate();

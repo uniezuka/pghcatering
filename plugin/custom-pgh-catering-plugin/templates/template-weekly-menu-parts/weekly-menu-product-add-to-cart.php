@@ -39,8 +39,8 @@
                 if ( $cart_product_type === 'variation' ) {
                     $cart_product_id = $values['data']->get_id();
 
-                    if(array_key_exists('menu_day', $values)) {
-                        if ($values['menu_day'] === $menu_day) {
+                    if(array_key_exists('pgh_menu_day', $values)) {
+                        if ($values['pgh_menu_day'] === $menu_day) {
                             if( $variation_id === $cart_product_id ) {
                                 $current_quantity = $quantity;
                             }
@@ -55,7 +55,6 @@
             $addtocart_options['variation_title'] = $variation_title;
             $addtocart_options['variation_array'] = $variation_array;
             $addtocart_options['is_gift_card'] = $is_gift_card;
-            $addtocart_options['menu_day'] = $menu_day;
 
             display_add_to_cart($product, $addtocart_options, $menu_day);
         }
@@ -81,8 +80,8 @@
             if ( $cart_product_type === 'simple' ) {
                 $cart_product_id = $values['data']->get_id();
                 
-                if(array_key_exists('menu_day', $values)) {
-                    if ($values['menu_day'] === $menu_day) {
+                if(array_key_exists('pgh_menu_day', $values)) {
+                    if ($values['pgh_menu_day'] === $menu_day) {
                         if( $pid === $cart_product_id ) {
                             $current_quantity = $quantity;
                         }

@@ -38,7 +38,7 @@
                     data: {
                         'action': 'adjust_cart',
                         'product_id': id,
-                        'menu_day': menu_day,
+                        'pgh_menu_day': menu_day,
                         'quantity': quantity,
                         'take_action': take_action
                     },

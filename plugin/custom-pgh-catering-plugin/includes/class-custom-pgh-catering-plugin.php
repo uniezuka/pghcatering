@@ -41,6 +41,33 @@ class Custom_Pgh_Catering_Plugin {
     private function define_hooks() {
         $this->loader->add_action( 'init', $this, 'register_post_types' );
         $this->loader->add_action( 'after_setup_theme', $this, 'custom_image_sizes' );
+
+        $this->loader->add_filter( 'woocommerce_locate_template', $this, 'woocommerce_locate_template', 10, 3 );
+    }
+
+    public function woocommerce_locate_template($template, $template_name, $template_path) {
+        global $woocommerce;
+
+        $_template = $template;
+
+        if ( ! $template_path ) $template_path = $woocommerce->template_url;
+
+        $plugin_path  = CUSTOM_PGH_CATERING_TEMPLATE_DIR . '/woocommerce/';
+
+        $template = locate_template(
+            array(
+                $template_path . $template_name,
+                $template_name
+            )
+        );
+
+        if ( ! $template && file_exists( $plugin_path . $template_name ) )
+            $template = $plugin_path . $template_name;
+
+        if ( ! $template )
+            $template = $_template;
+
+        return $template;
     }
 
 	private function define_admin_hooks() {
@@ -64,7 +91,9 @@ class Custom_Pgh_Catering_Plugin {
         $this->loader->add_action( 'wp_ajax_nopriv_adjust_cart', $plugin_public, 'adjust_cart' );
         $this->loader->add_action( 'wp_ajax_adjust_cart', $plugin_public, 'adjust_cart' );
 
-        $this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'add_menu_day', 10, 3 );
+        $this->loader->add_filter( 'woocommerce_add_cart_item_data', $plugin_public, 'wc_add_cart_item_data', 10, 3 );
+        $this->loader->add_filter( 'woocommerce_get_item_data', $plugin_public, 'wc_get_item_data', 10, 2 );
+        $this->loader->add_action( 'woocommerce_checkout_create_order_line_item', $plugin_public, 'wc_checkout_create_order_line_item', 10, 4 );
 
         $this->loader->add_filter( 'wps_store_select_first_option', $plugin_public, 'wps_store_select_first_option' );   
 	}

@@ -10,9 +10,29 @@ class Custom_Pgh_Catering_Plugin_Public {
 		$this->version = $version;
 	}
 
-    public function add_menu_day($cart_item_data, $product_id, $variation_id) {
-        if(isset($_POST['menu_day'])) {
-            $cart_item_data['menu_day'] = sanitize_text_field($_POST['menu_day']);
+    function wc_checkout_create_order_line_item($item, $cart_item_key, $values, $order) {
+
+        if(array_key_exists('pgh_menu_day', $values)) {
+            $item->add_meta_data('_pgh_menu_day',$values['pgh_menu_day']);
+        }
+    }
+
+    public function wc_get_item_data($item_data, $cart_item) {
+        if(array_key_exists('pgh_menu_day', $cart_item)) {
+            $custom_details = $cart_item['pgh_menu_day'];
+    
+            $item_data[] = array(
+                'key'   => 'Day',
+                'value' => $custom_details
+            );
+        }
+    
+        return $item_data;
+    }
+
+    public function wc_add_cart_item_data($cart_item_data, $product_id, $variation_id) {
+        if(isset($_POST['pgh_menu_day'])) {
+            $cart_item_data['pgh_menu_day'] = sanitize_text_field($_POST['pgh_menu_day']);
         }
 
         return $cart_item_data;
