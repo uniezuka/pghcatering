@@ -3004,7 +3004,10 @@
   .page-packing-reports .storefront-breadcrumb,
   .page-delivery-reports #masthead,
   .page-delivery-reports #colophon,
-  .page-delivery-reports .storefront-breadcrumb {
+  .page-delivery-reports .storefront-breadcrumb,
+  .papage-template-template-kitchen-report #masthead,
+  .page-template-template-kitchen-report #colophon,
+  .page-template-template-kitchen-report .storefront-breadcrumb {
     display: none;
   }
   
@@ -3012,7 +3015,8 @@
   .page-kitchen-reports #reports-date-query,
   .page-preference-reports #reports-date-query,
   .page-packing-reports #reports-date-query,
-  .page-delivery-reports #reports-date-query {
+  .page-delivery-reports #reports-date-query,
+  .page-template-template-kitchen-report .reports-date-query {
     display: inline-block;
     margin-top: .5rem;
   }
@@ -3021,7 +3025,8 @@
   .page-kitchen-reports #reports-date-query div,
   .page-preference-reports #reports-date-query div,
   .page-packing-reports #reports-date-query div,
-  .page-delivery-reports #reports-date-query div {
+  .page-delivery-reports #reports-date-query div,
+  .page-template-template-kitchen-report .reports-date-query div {
     display: inline-block;
   }
   
@@ -3029,7 +3034,8 @@
   .page-kitchen-reports #reports-date-query div div,
   .page-preference-reports #reports-date-query div div,
   .page-packing-reports #reports-date-query div div,
-  .page-delivery-reports #reports-date-query div div {
+  .page-delivery-reports #reports-date-query div div,
+  .page-template-template-kitchen-report .reports-date-query div div {
     margin-bottom: .5rem;
   }
   
@@ -3037,7 +3043,8 @@
   .page-kitchen-reports #reports-date-query label,
   .page-preference-reports #reports-date-query label,
   .page-packing-reports #reports-date-query label,
-  .page-delivery-reports #reports-date-query label {
+  .page-delivery-reports #reports-date-query label,
+  .page-template-template-kitchen-report .reports-date-query label {
     display: inline-block;
     margin-right: .5rem;
   }
@@ -3046,7 +3053,8 @@
   .page-kitchen-reports #reports-date-query input[type="date"],
   .page-preference-reports #reports-date-query input[type="date"],
   .page-packing-reports #reports-date-query input[type="date"],
-  .page-delivery-reports #reports-date-query input[type="date"] {
+  .page-delivery-reports #reports-date-query input[type="date"],
+  .page-template-template-kitchen-report .reports-date-query input[type="date"] {
     margin-right: .5rem;
     border: 2px solid darkorange;
     padding: 9px 16px 9px;
@@ -3061,7 +3069,8 @@
   .page-kitchen-reports #main,
   .page-preference-reports #main,
   .page-packing-reports #main,
-  .page-delivery-reports #main {
+  .page-delivery-reports #main
+  .page-template-template-kitchen-report #main {
     margin-right: .5rem;
     margin-left: .5rem;
     overflow-x: scroll;
@@ -3071,7 +3080,8 @@
   .page-kitchen-reports .button.reports,
   .page-preference-reports .button.reports,
   .page-packing-reports .button.reports,
-  .page-delivery-reports .button.reports {
+  .page-delivery-reports .button.reports,
+  .page-template-template-kitchen-report .button.reports {
     margin-top: .5rem;
     margin-right: .5rem;
   }
@@ -3081,7 +3091,8 @@
     .page-kitchen-reports .button.reports,
     .page-preference-reports .button.reports,
     .page-packing-reports .button.reports,
-    .page-delivery-reports .button.reports {
+    .page-delivery-reports .button.reports,
+    .page-template-template-kitchen-report .button.reports {
       display: none;
     }
   }
@@ -3228,6 +3239,7 @@
   }
   
   .report-intro-wrapper {
+    margin-top: 20px;
     clear: both;
   }
   
@@ -3598,117 +3610,6 @@
   body .gform_wrapper.gf_browser_chrome .gfield_radio li input[type=radio] {
     margin-top: 0;
     margin-right: 5px;
-  }
-  
-  /*----------------------------------------------djh Aug 23, 2018
-    Email Optin Form
-  ----------------------------------------------*/
-  #gform_wrapper_7 {
-    margin-top: 0;
-  }
-  
-  #gform_wrapper_7 .gfield_label {
-    display: none;
-  }
-  
-  #gform_wrapper_7 .gform_body,
-  #gform_wrapper_7 .gform_footer {
-    display: inline-block;
-  }
-  
-  #gform_wrapper_7 .gform_body {
-    width: 40%;
-  }
-  
-  @media only screen and (max-width: 768px) {
-    #gform_wrapper_7 .gform_body {
-      width: 100%;
-    }
-  }
-  
-  #gform_wrapper_7 .gform_footer {
-    width: auto;
-    margin-top: 0;
-  }
-  
-  #gform_wrapper_7 form {
-    text-align: center;
-  }
-  
-  #gform_submit_button_7 {
-    margin-right: 0;
-    padding-top: 2px;
-    padding-bottom: 5px;
-    background-color: #95c63a;
-    border-color: #95c63a;
-    color: #f8f8f8;
-  }
-  
-  #gform_submit_button_7:hover {
-    background-color: #f8f8f8;
-    border-color: #ff8c00;
-    color: #ff8c00;
-  }
-  
-  #email-optin h5 {
-    color: #95c63a;
-    font-size: 16px;
-  }
-  
-  @media only screen and (min-width: 641px) {
-    body .gform_wrapper ul.gform_fields li.gfield {
-      padding-right: 4px;
-    }
-  }
-  
-  /*----------------------------------------------djh Aug 14, 2018
-    FAQs
-  ----------------------------------------------*/
-  .faq-card {
-    position: relative;
-    z-index: 0;
-  }
-  
-  .faq-card .faq-card-inner.duplicate {
-    display: none;
-  }
-  
-  .faq-card.half-hidden .faq-card-inner {
-    z-index: 1;
-  }
-  
-  .faq-card.half-hidden {
-    max-height: 100px;
-    overflow: hidden;
-  }
-  
-  .faq-card.half-hidden .faq-card-inner.duplicate {
-    display: block;
-    position: absolute;
-    top: 0;
-    color: transparent;
-    z-index: 2;
-    background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, white));
-    background: -webkit-linear-gradient(top, transparent, white 50%);
-    background: -o-linear-gradient(top, transparent, white 50%);
-    background: linear-gradient(to bottom, transparent, white 50%);
-  }
-  
-  .faq-card {
-    margin: 0 0 1% 0;
-    text-align: left;
-  }
-  
-  .faq-card-inner {
-    padding: 1em;
-    background: #dfe1e3;
-  }
-  
-  .faq-card-inner h4 {
-    margin-top: 1rem;
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.1;
-    text-transform: none;
   }
   
   .wpsl-store-location,
@@ -5845,11 +5746,6 @@
   /*----------------------------------------------djh Sep 4, 2018
     Meal Preferences
   ----------------------------------------------*/
-  .woocommerce-MyAccount-content #gform_wrapper_2 {
-    background-image: url("https://dev-pghfresh.pantheonsite.io/wp-content/uploads/2018/09/yellowpad.jpg");
-    background-repeat: repeat;
-    background-size: contain;
-  }
   
   .woocommerce-MyAccount-content #gform_wrapper_2 #gform_2 {
     padding: 1rem;
