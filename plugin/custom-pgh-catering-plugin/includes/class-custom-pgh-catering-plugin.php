@@ -25,9 +25,10 @@ class Custom_Pgh_Catering_Plugin {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-custom-pgh-catering-plugin-loader.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-custom-pgh-catering-plugin-i18n.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-custom-pgh-catering-plugin-shortcodes.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-custom-pgh-catering-plugin-admin.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-custom-pgh-catering-plugin-public.php';
-
+        
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-meal-preference.php';
 
 		$this->loader = new Custom_Pgh_Catering_Plugin_Loader();
@@ -39,6 +40,9 @@ class Custom_Pgh_Catering_Plugin {
 	}
 
     private function define_hooks() {
+        $shortcodes = new Custom_Pgh_Catering_Plugin_Shortcodes();
+
+        $this->loader->add_action( 'init', $shortcodes, 'register_shortcodes' );
         $this->loader->add_action( 'init', $this, 'register_post_types' );
         $this->loader->add_action( 'after_setup_theme', $this, 'custom_image_sizes' );
 
@@ -75,10 +79,14 @@ class Custom_Pgh_Catering_Plugin {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+        $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_settings_page' );
+        $this->loader->add_action( 'admin_init', $plugin_admin, 'register_plugin_settings' );
         
         $this->loader->add_filter( 'theme_page_templates', $plugin_admin, 'add_page_templates', 10, 3 );
         $this->loader->add_filter( 'template_include', $plugin_admin, 'load_template' );
-        $this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'register_project_templates' );       
+        $this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'register_project_templates' );
+        $this->loader->add_filter( 'bulk_actions-edit-shop_order', $plugin_admin, 'register_bulk_actions' ); 
+        $this->loader->add_filter( 'handle_bulk_actions-edit-shop_order', $plugin_admin, 'bulk_action_handler', 10, 3 ); 
 	}
 
 	private function define_public_hooks() {

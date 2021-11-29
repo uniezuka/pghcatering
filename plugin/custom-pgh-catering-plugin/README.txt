@@ -18,5 +18,8 @@ Custom Plugin specifically designed for PGH Fresh ecommerce site.
 
 == Changelog ==
 
+= 1.0.1 =
+* Added Packing and Kitchen Reports
+
 = 1.0.0 =
 * Initial version

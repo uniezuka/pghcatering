@@ -20,13 +20,17 @@ class Custom_Pgh_Catering_Plugin_Admin {
 
     public function add_page_templates($page_templates, $wp_theme, $post) {
         $page_templates['template-weekly-menu.php'] = __('PGH Fresh Weekly Menu', CUSTOM_PGH_CATERING_DOMAIN_NAME );
+        $page_templates['template-kitchen-report.php'] = __('Kitchen Reports', CUSTOM_PGH_CATERING_DOMAIN_NAME );
+        $page_templates['template-packing-report.php'] = __('Packing Reports', CUSTOM_PGH_CATERING_DOMAIN_NAME );
 
         return $page_templates;
     }
 
     public function load_template($template) {
         $valid_template_slugs = [
-            'template-weekly-menu.php'
+            'template-weekly-menu.php',
+            'template-kitchen-report.php',
+            'template-packing-report.php'
         ];
         
         $page_template_slug = get_page_template_slug();
@@ -59,4 +63,105 @@ class Custom_Pgh_Catering_Plugin_Admin {
 
 		return $atts;
 	} 
+
+    public function register_bulk_actions( $actions ) {
+        $actions['view_kitchen_report'] = __('View Kitchen Report', $this->plugin_name);
+        $actions['view_packing_report'] = __('View Packing Report', $this->plugin_name);
+        
+        return $actions;
+    }
+
+    private function is_valid_do_action($doaction) {
+        switch ($doaction) {
+            case 'view_kitchen_report':
+            case 'view_packing_report':
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public function bulk_action_handler( $sendback, $doaction, $items ) {
+        if ( !$this->is_valid_do_action( $doaction ) ) return $sendback;
+
+        $options = get_option( 'custom_pgh_catering_plugin_options' );
+
+        switch ($doaction) {
+            case 'view_kitchen_report':
+                if ( isset( $options['kitchen_report_page'] ) && ! empty( $options['kitchen_report_page'] ) ) {
+                    $sendback = home_url( $options['kitchen_report_page'] );
+                    $sendback = add_query_arg('order_ids', implode('-', $items), $sendback );
+                }
+                
+                break;
+
+            case 'view_packing_report':
+                if ( isset( $options['packing_report_page'] ) && ! empty( $options['packing_report_page'] ) ) {
+                    $sendback = home_url( $options['packing_report_page'] );
+                    $sendback = add_query_arg('order_ids', implode('-', $items), $sendback );
+                }
+                break;
+
+            default:
+                break;
+        }
+  
+        wp_safe_redirect($sendback);
+        
+        exit;
+    }
+
+    public function add_plugin_settings_page() {
+        add_options_page( 'PGH Catering Settings', 'PGH Catering', 'manage_options', 'custom_pgh_catering_plugin', array($this, 'render_plugin_settings_page' ) );
+    }
+
+    public function render_plugin_settings_page () {
+        include_once( 'partials/plugin_settings_page_display.php' );
+    }
+
+    public function register_plugin_settings() {
+
+        register_setting( 
+            'custom_pgh_catering_plugin_options', 
+            'custom_pgh_catering_plugin_options'
+        );
+
+        add_settings_section(
+            'custom_pgh_catering_plugin_pages_section',
+            'Pages',
+            array ( $this, 'custom_pgh_catering_plugin_pages_section_callback' ),
+            'custom_pgh_catering_plugin'
+        );
+
+        add_settings_field( 'custom_pgh_catering_kitchen_report_page',
+            'Kitchen Report Page',
+            array ( $this, 'kitchen_report_page_callback' ),
+            'custom_pgh_catering_plugin',
+            'custom_pgh_catering_plugin_pages_section',
+            array( 'label_for' => 'custom_pgh_catering_kitchen_report_page' ) 
+        );
+
+        add_settings_field( 'custom_pgh_catering_packing_report_page',
+            'Packing Report Page',
+            array ( $this, 'packing_report_page_callback' ),
+            'custom_pgh_catering_plugin',
+            'custom_pgh_catering_plugin_pages_section',
+            array( 'label_for' => 'custom_pgh_catering_packing_report_page' ) 
+        );
+    }
+
+    public function custom_pgh_catering_plugin_pages_section_callback() {
+        echo '<p>Set or Map PGH Catering pages</p>';
+    }
+
+    public function kitchen_report_page_callback() {
+        $options = get_option( 'custom_pgh_catering_plugin_options' );
+        echo "<input id='custom_pgh_catering_kitchen_report_page' name='custom_pgh_catering_plugin_options[kitchen_report_page]' type='text' value='" . esc_attr( $options['kitchen_report_page'] ) . "' />";
+    }
+
+    public function packing_report_page_callback() {
+        $options = get_option( 'custom_pgh_catering_plugin_options' );
+        echo "<input id='custom_pgh_catering_packing_report_page' name='custom_pgh_catering_plugin_options[packing_report_page]' type='text' value='" . esc_attr( $options['packing_report_page'] ) . "' />";
+    }
 }
