@@ -81,6 +81,7 @@ class Custom_Pgh_Catering_Plugin {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
         $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_settings_page' );
         $this->loader->add_action( 'admin_init', $plugin_admin, 'register_plugin_settings' );
+        $this->loader->add_action( 'publish_weekly_menus', $plugin_admin, 'clear_wc_users_session', 10, 3 );
         
         $this->loader->add_filter( 'theme_page_templates', $plugin_admin, 'add_page_templates', 10, 3 );
         $this->loader->add_filter( 'template_include', $plugin_admin, 'load_template' );

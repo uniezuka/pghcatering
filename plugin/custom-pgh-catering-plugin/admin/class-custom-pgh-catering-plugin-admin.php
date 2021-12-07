@@ -9,6 +9,17 @@ class Custom_Pgh_Catering_Plugin_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 	}
+ 
+    public function clear_wc_users_session($id, $post_obj){
+        
+        if ( get_post_type( $id ) == 'weekly_menus' ) {
+            global $wpdb;
+
+            $wpdb->query( "TRUNCATE {$wpdb->prefix}woocommerce_sessions" );
+            $result = absint( $wpdb->query( "DELETE FROM {$wpdb->usermeta} WHERE meta_key='_woocommerce_persistent_cart_" . get_current_blog_id() . "';" ) ); // WPCS: unprepared SQL ok.
+            wp_cache_flush();
+        }
+    }
 
 	public function enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/custom-pgh-catering-plugin-admin.css', array(), $this->version, 'all' );
