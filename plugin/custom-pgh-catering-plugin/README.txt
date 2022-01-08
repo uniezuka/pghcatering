@@ -18,6 +18,9 @@ Custom Plugin specifically designed for PGH Fresh ecommerce site.
 
 == Changelog ==
 
+= 1.1.2 =
+* Modified Packing and Kitchen Reports
+
 = 1.1.1 =
 * Clear customer's Cache when a new Weekly Menu is published
 

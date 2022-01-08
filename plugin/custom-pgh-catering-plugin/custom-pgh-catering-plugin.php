@@ -8,7 +8,7 @@
  * Plugin Name:       Custom PGH Catering Plugin
  * Plugin URI:        https://stellarwebdev.com/
  * Description:       Custom Plugin specifically designed for PGH Fresh ecommerce site.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            J Lorenzo
  * Author URI:        https://stellarwebdev.com/
  * License:           GPL-2.0+
@@ -21,7 +21,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'CUSTOM_PGH_CATERING_PLUGIN_VERSION', '1.1.1' );
+define( 'CUSTOM_PGH_CATERING_PLUGIN_VERSION', '1.1.2' );
 
 if ( !defined( 'CUSTOM_PGH_CATERING_PLUGIN_DIR') ) {
 	define( 'CUSTOM_PGH_CATERING_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
