@@ -118,6 +118,37 @@
                 }
 
                 $total_entrees += $qty;
+
+                // all entree sides
+                $product = wc_get_product( $variation_id );
+                $attributes = $product->get_attributes();
+                if ( is_array($attributes) && ! empty($attributes) ) {
+                    foreach ($attributes as $taxonomy => $attrslug) { 
+                        if ( ! $attrslug || gettype($attrslug) !== 'string' ) {
+                            continue;
+                        }
+                        // this should always be a loop of 1 iteration (1 side)
+                        // NOTE: if there is more than one attribute, this is only selecting the last in the array
+                        $term = get_term_by('slug', $attrslug, $taxonomy);
+                        $term_name = $term->name;
+                        $term_id   = $term->term_id;
+                    }          
+                }
+
+                $item_key = get_item_key($menu_day, $term_id, $entree_sides, 'term_id');
+                if ( $item_key === false ) {
+                    $entree_sides[] = array(
+                        'term_id' => $term_id,
+                        'menu_day' => $menu_day,
+                        'term_name' => $term_name,
+                        'qty' => $qty
+                    );
+                }
+                else {
+                    $before = $entree_sides[$item_key]['qty'];
+                    $after  = intval($before) + $qty;
+                    $entree_sides[$item_key]['qty'] = $after;
+                }
             }
 
             else if ( has_term( 'family-portions', 'product_cat', $product_id ) ) {
@@ -151,6 +182,37 @@
                     $before = $all_family_with_sides[$item_key]['qty'];
                     $after  = intval($before) + $qty;
                     $all_family_with_sides[$item_key]['qty'] = $after;
+                }
+
+                // all family sides
+                $product = wc_get_product( $variation_id );
+                $attributes = $product->get_attributes();
+                if ( is_array($attributes) && ! empty($attributes) ) {
+                    foreach ($attributes as $taxonomy => $attrslug) { 
+                        if ( ! $attrslug || gettype($attrslug) !== 'string' ) {
+                            continue;
+                        }
+                        // this should always be a loop of 1 iteration (1 side)
+                        // NOTE: if there is more than one attribute, this is only selecting the last in the array
+                        $term = get_term_by('slug', $attrslug, $taxonomy);
+                        $term_name = $term->name;
+                        $term_id   = $term->term_id;
+                    }          
+                }
+
+                $item_key = get_item_key($menu_day, $term_id, $family_sides, 'term_id');
+                if ( $item_key === false ) {
+                    $family_sides[] = array(
+                        'term_id' => $term_id,
+                        'menu_day' => $menu_day,
+                        'term_name' => $term_name,
+                        'qty' => $qty
+                    );
+                }
+                else {
+                    $before = $family_sides[$item_key]['qty'];
+                    $after  = intval($before) + $qty;
+                    $family_sides[$item_key]['qty'] = $after;
                 }
             } 
         }
@@ -263,53 +325,73 @@
                             <th>Qty</th>
                             <th>Qty</th>
                         </tr>
-                        <?php 
-                            foreach ($items as $item_id => $item_product) :
-                                $item_product_record = $item_product['product'];
-                                $product_id = $item_product_record->get_product_id();
-                                $data    = $item_product_record->get_data();
-                                $product = $item_product_record->get_product();
-                                $variation_id = $data['variation_id'];
 
-                                if ( $variation_id === 0 ) { // its a simple product, make v_id same as p_id
-                                    $variation_id = $product_id;
-                                }
+                        <?php if ( $label === 'Entree Sides' || $label === 'Family Portion Sides' ) : ?>
 
-                                if ( $label === 'Entree' || $label === 'Family Portion' ) { // this is Entrees/Family without Sides
-                                    $name = $product->get_title();
-                                    $total = $item_product['qty'];
-                                } 
-                                else {
-                                    $name = $data['name'];
-                                    $total = $item_product['qty'];
-                                }
-
-                                if ( strpos($label, 'Combinations') !== false ) {
-                                    $best_id_url = sprintf( '<a href="%s%s%d%s" target="_blank">%d</a>', home_url(), '/wp-admin/post.php?post=', $product_id, '&action=edit', $variation_id );
-                                } else {
-                                    $best_id_url = sprintf( '<a href="%s%s%d%s" target="_blank">%d</a>', home_url(), '/wp-admin/post.php?post=', $product_id, '&action=edit', $product_id );
-                                } 
-                        ?>
-
-                        <tr>
-                            <td><?php echo $best_id_url ?></td>
-                            <td><strong><?php echo $name ?></strong></td>
-                            
                             <?php 
-                                foreach ($day_table_map as $day_key => $day_value) : 
-                                    $qty = ($day_key == $item_product['menu_day']) ? 
-                                        $item_product['qty'] : '';
-                                    
+                                foreach ($items as $item_id => $item_product) :
                             ?>
-                            <td>
-                                <?php echo $qty ?>
-                            </td>
-                            <?php 
-                                endforeach
-                            ?>
-                        </tr>
+                                <tr>
+                                    <td><?php echo $item_product['term_id'] ?></td>
+                                    <td><strong><?php echo $item_product['term_name'] ?></strong></td>
+                                </td>
+                                
+                                <?php 
+                                    foreach ($day_table_map as $day_key => $day_value) : 
+                                        $qty = ($day_key == $item_product['menu_day']) ? 
+                                            $item_product['qty'] : '';
+                                        
+                                ?>
+                                <td><?php echo $qty ?></td>
+                                <?php endforeach ?>
+                            <?php endforeach; ?>
 
-                        <?php endforeach ?>
+                        <?php else : ?>
+                        
+                            <?php 
+                                foreach ($items as $item_id => $item_product) :
+                                    $item_product_record = $item_product['product'];
+                                    $product_id = $item_product_record->get_product_id();
+                                    $data    = $item_product_record->get_data();
+                                    $product = $item_product_record->get_product();
+                                    $variation_id = $data['variation_id'];
+
+                                    if ( $variation_id === 0 ) { // its a simple product, make v_id same as p_id
+                                        $variation_id = $product_id;
+                                    }
+
+                                    if ( $label === 'Entree' || $label === 'Family Portion' ) { // this is Entrees/Family without Sides
+                                        $name = $product->get_title();
+                                        $total = $item_product['qty'];
+                                    } 
+                                    else {
+                                        $name = $data['name'];
+                                        $total = $item_product['qty'];
+                                    }
+
+                                    if ( strpos($label, 'Combinations') !== false ) {
+                                        $best_id_url = sprintf( '<a href="%s%s%d%s" target="_blank">%d</a>', home_url(), '/wp-admin/post.php?post=', $product_id, '&action=edit', $variation_id );
+                                    } else {
+                                        $best_id_url = sprintf( '<a href="%s%s%d%s" target="_blank">%d</a>', home_url(), '/wp-admin/post.php?post=', $product_id, '&action=edit', $product_id );
+                                    } 
+                            ?>
+
+                            <tr>
+                                <td><?php echo $best_id_url ?></td>
+                                <td><strong><?php echo $name ?></strong></td>
+                                
+                                <?php 
+                                    foreach ($day_table_map as $day_key => $day_value) : 
+                                        $qty = ($day_key == $item_product['menu_day']) ? 
+                                            $item_product['qty'] : '';
+                                        
+                                ?>
+                                <td><?php echo $qty ?></td>
+                                <?php endforeach ?>
+                            </tr>
+
+                            <?php endforeach ?>
+                        <?php endif ?>
                     <?php endforeach ?>
                     </tbody>
                 </table>

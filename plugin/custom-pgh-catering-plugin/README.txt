@@ -18,6 +18,9 @@ Custom Plugin specifically designed for PGH Fresh ecommerce site.
 
 == Changelog ==
 
+= 1.1.3 =
+* Added missing tables to Kitchen Reports
+
 = 1.1.2 =
 * Modified Packing and Kitchen Reports
 
