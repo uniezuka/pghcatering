@@ -215,6 +215,57 @@
                     $family_sides[$item_key]['qty'] = $after;
                 }
             } 
+
+            else if ( has_term( 'a-la-carte', 'product_cat', $product_id ) ) {
+                $item_key = get_item_key($menu_day, $variation_id, $all_alacarte, 'variation_id');
+                if ( $item_key === false ) {
+                    $all_alacarte[] = array(
+                        'variation_id' => $product_id,
+                        'menu_day' => $menu_day,
+                        'product' => $item_product,
+                        'qty' => $qty
+                    );
+                }
+                else {
+                    $before = $all_alacarte[$item_key]['qty'];
+                    $after  = intval($before) + $qty;
+                    $all_alacarte[$item_key]['qty'] = $after;
+                }
+            } 
+
+            else if ( has_term( array( 'drinks', 'dessert', 'snacks', 'dressing'), 'product_cat', $product_id ) ) {
+                $item_key = get_item_key($menu_day, $variation_id, $all_others, 'variation_id');
+                if ( $item_key === false ) {
+                    $all_others[] = array(
+                        'variation_id' => $product_id,
+                        'menu_day' => $menu_day,
+                        'product' => $item_product,
+                        'qty' => $qty
+                    );
+                }
+                else {
+                    $before = $all_others[$item_key]['qty'];
+                    $after  = intval($before) + $qty;
+                    $all_others[$item_key]['qty'] = $after;
+                }
+            } 
+
+            else {
+                $item_key = get_item_key($menu_day, $variation_id, $all_nonmeals, 'variation_id');
+                if ( $item_key === false ) {
+                    $all_nonmeals[] = array(
+                        'variation_id' => $product_id,
+                        'menu_day' => $menu_day,
+                        'product' => $item_product,
+                        'qty' => $qty
+                    );
+                }
+                else {
+                    $before = $all_nonmeals[$item_key]['qty'];
+                    $after  = intval($before) + $qty;
+                    $all_nonmeals[$item_key]['qty'] = $after;
+                }
+            }
         }
     }
 
